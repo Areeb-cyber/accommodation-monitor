@@ -1,61 +1,85 @@
 -- Accommodation Monitor
 
-A Python-based web monitoring script that checks accommodation availability and helps detect changes on an accommodation website.
+A Python-based web monitoring script that checks an accommodation website for changes and provides notifications when a change is detected.
 
 -- Overview
 
 Finding student accommodation can be difficult when available rooms are limited and listings change quickly. I created this project to automate the process of monitoring an accommodation website instead of manually checking it repeatedly.
 
-The script periodically checks the website and detects changes in the available accommodation information.
+The script periodically retrieves the website content, generates a hash of the response, and compares it with the previous result. When a change is detected, the script can play an alarm and send an email notification.
 
 -- Features
 
-1. Automatically monitors an accommodation website
-2. Checks for changes at regular intervals
-3. Uses web automation to retrieve current information
-4. Detects changes in website content
-5. Includes error handling for network-related issues
-6. Uses hashing to compare previously retrieved content with new content
+- Automatically monitors an accommodation website
+- Checks for changes at regular intervals
+- Uses HTTP requests to retrieve website content
+- Uses SHA-224 hashing to detect changes
+- Sends email notifications when changes are detected
+- Plays an audio alarm when a change occurs
+- Includes retry logic for connection failures
+- Handles HTTP and network-related errors
+- Runs continuously until stopped
 
 -- Technologies Used
 
-* Python
-* Selenium
-* HTTP requests
-* Hashing (SHA-256)
-* SMTP / Email notifications
-* Web automation
+- Python
+- urllib
+- hashlib
+- SMTP
+- Pygame
+- Error handling
+- Web monitoring
+- Automation
 
 -- How It Works
 
-1. The script accesses the accommodation website.
-2. It retrieves the relevant webpage information.
-3. The retrieved content is processed and compared with the previous result.
-4. A change is detected when the content differs.
-5. The script can notify the user when a relevant change occurs.
-6. The process repeats at defined intervals.
+1. The script connects to the accommodation website.
+2. The website response is downloaded.
+3. A SHA-224 hash is generated from the response.
+4. The hash is stored as the current reference.
+5. The script waits before checking the website again.
+6. A new hash is generated.
+7. The new hash is compared with the previous hash.
+8. If the hashes are different, a change has been detected.
+9. An audio alarm is played and an email notification is sent.
+10. The new hash becomes the reference for the next check.
+
+-- Email Configuration
+
+Email credentials are not stored directly in the source code.
+
+The script reads the following environment variables:
+
+- EMAIL_ADDRESS
+- EMAIL_RECEIVER
+- EMAIL_PASSWORD
+
+This approach helps prevent email credentials from being exposed in the public repository.
 
 -- Purpose
 
 This project was created as a practical automation project to solve a real-world problem while developing experience with:
 
-1. Python scripting
-2. Web automation
-3. Monitoring systems
-4. Error handling
-5. Automation workflows
-6. Basic networking concepts
+- Python scripting
+- Web monitoring
+- Automation
+- Hash-based change detection
+- Email notifications
+- Error handling
+- Basic networking concepts
 
 -- Future Improvements
 
 Possible improvements include:
 
-1. Adding configurable monitoring intervals
-2. Improving change detection to focus only on relevant accommodation data
-3. Adding more notification methods
-4. Adding logging
-5. Running the monitor automatically using GitHub Actions or another cloud service
-6. Supporting multiple accommodation websites
+- Adding configurable monitoring intervals
+- Detecting only relevant accommodation changes instead of any website change
+- Adding more notification methods
+- Adding structured logging
+- Adding a configuration file
+- Running the monitor as a background service
+- Adding automated testing
+- Supporting multiple accommodation websites
 
 -- Author
 
